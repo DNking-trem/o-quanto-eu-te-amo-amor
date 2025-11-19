@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>O quanto eu te amo</title>
+<style>
+    body {
+        background: #000;
+        color: white;
+        font-size: 60px;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 150px;
+    }
+</style>
+</head>
+<body>
+
+<div id="titulo">O quanto eu te amo</div>
+<div id="numero"></div>
+
+<script>
+    let total = 1000000;
+    let duracao = 7000; // 7 segundos
+    let inicio = null;
+
+    let numeroDiv = document.getElementById("numero");
+    let cores = ["red", "yellow", "lime", "cyan", "magenta", "orange"];
+    let corIndex = 0;
+    let trocaCorVelocidade = 60; // muda de cor mais rápido
+    let contadorCor = 0;
+
+    function animarContagem(timestamp) {
+        if (!inicio) inicio = timestamp;
+        let progresso = timestamp - inicio;
+
+        // calcula valor atual com base na duração total
+        let valor = Math.floor((progresso / duracao) * total);
+
+        // limita no máximo
+        if (valor >= total) {
+            numeroDiv.style.color = "white";
+            numeroDiv.textContent = "∞";
+            return;
+        }
+
+        // muda cor suavemente
+        contadorCor++;
+        if (contadorCor > trocaCorVelocidade) {
+            corIndex = (corIndex + 1) % cores.length;
+            numeroDiv.style.color = cores[corIndex];
+            contadorCor = 0;
+        }
+
+        numeroDiv.textContent = valor.toLocaleString("pt-BR");
+
+        requestAnimationFrame(animarContagem);
+    }
+
+    requestAnimationFrame(animarContagem);
+</script>
+
+</body>
+</html>
